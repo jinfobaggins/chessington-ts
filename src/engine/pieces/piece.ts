@@ -30,6 +30,12 @@ export default class Piece {
         }
     }
 
+    public addAvailableMoveIfSquareEmpty(board: Board, availableSpacesArray: Square[], square: Square){
+        if (board.checkIfSquareEmpty(Square.at(square.row, square.col))){
+            availableSpacesArray.push(Square.at(square.row, square.col))
+        }
+    }
+
 
     public addLateralMoves(board: Board, availableSpacesArray: Square[], max_spaces: number) {
         let currentSquare = board.findPiece(this);

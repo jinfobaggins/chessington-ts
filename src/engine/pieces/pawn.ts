@@ -10,7 +10,7 @@ export default class Pawn extends Piece {
     }
 
     public getAvailableMoves(board: Board) {
-        let current_square = board.findPiece(this);
+        let currentSquare = board.findPiece(this);
         let availableSpacesArray = new Array();
         let directionMultiplier: number;
 
@@ -22,11 +22,11 @@ export default class Pawn extends Piece {
             directionMultiplier = -1
         }
 
-        if (board.getPiece(Square.at(current_square.row + directionMultiplier, current_square.col)) == undefined) {
+        if (board.checkIfSquareEmpty(Square.at(currentSquare.row + 1 * directionMultiplier, currentSquare.col)))  {
             this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 1*directionMultiplier, 0);
             //can move 2 spaces if not already moved
             if (!this.hasMoved){
-                if (board.getPiece(Square.at(current_square.row + 2*directionMultiplier, current_square.col)) == undefined) {
+                if (board.checkIfSquareEmpty(Square.at(currentSquare.row + 2 * directionMultiplier, currentSquare.col))) {
                     this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 2*directionMultiplier, 0);
                 }
             }

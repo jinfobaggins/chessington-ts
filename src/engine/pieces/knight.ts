@@ -1,7 +1,7 @@
 import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
-import GameSettings from "../gameSettings";
+import Square from "../square";
 
 export default class Knight extends Piece {
     public constructor(player: Player) {
@@ -9,15 +9,16 @@ export default class Knight extends Piece {
     }
 
     public getAvailableMoves(board: Board) {
+        let currentSquare = board.findPiece(this);
         let availableSpacesArray = new Array();
-        this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 1, 2)
-        this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 1, -2)
-        this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -1, 2)
-        this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -1, -2)
-        this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 2, 1)
-        this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 2, -1)
-        this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -2, 1)
-        this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -2, -1)
+        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row + 1, currentSquare.col + 2))
+        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row + 1, currentSquare.col - 2))
+        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row - 1, currentSquare.col + 2))
+        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row - 1, currentSquare.col - 2))
+        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row + 2, currentSquare.col + 1))
+        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row + 2, currentSquare.col - 1))
+        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row - 2, currentSquare.col + 1))
+        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row - 2, currentSquare.col - 1))
 
         return availableSpacesArray;
     }
