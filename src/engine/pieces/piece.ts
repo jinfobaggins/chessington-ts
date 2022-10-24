@@ -68,12 +68,39 @@ export default class Piece {
     }
 
     public addDiagonalMoves(board: Board, availableSpacesArray: Square[], max_spaces: number){
-        for(let i = 1; i <=max_spaces; i++){
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, i)
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, -i)
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, i)
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, -i)
+        let currentSquare = board.findPiece(this);
+        for(let i = 1; i <=max_spaces; i++) {
+            if (board.checkIfSquareEmpty(Square.at(currentSquare.row + i, currentSquare.col + i))) {
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, i)
+            } else {
+                break
+            }
         }
+
+        for(let i = 1; i <=max_spaces; i++) {
+            if (board.checkIfSquareEmpty(Square.at(currentSquare.row + i, currentSquare.col - i))) {
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, -i)
+            } else {
+                break
+            }
+        }
+
+        for(let i = 1; i <=max_spaces; i++) {
+            if (board.checkIfSquareEmpty(Square.at(currentSquare.row - i, currentSquare.col + i))) {
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, i)
+            } else {
+                break
+            }
+        }
+
+        for(let i = 1; i <=max_spaces; i++) {
+            if (board.checkIfSquareEmpty(Square.at(currentSquare.row - i, currentSquare.col - i))) {
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, -i)
+            } else {
+                break
+            }
+        }
+
     }
 
 
