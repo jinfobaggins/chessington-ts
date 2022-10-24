@@ -1,6 +1,7 @@
 import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
+import Square from '../square';
 import GameSettings from '../gameSettings';
 
 export default class Pawn extends Piece {
@@ -11,18 +12,24 @@ export default class Pawn extends Piece {
     public getAvailableMoves(board: Board) {
         let current_square = board.findPiece(this);
         let availableSpacesArray = new Array();
+        let directionMultiplier: number;
 
-        if (this.player == 0){
-            if (current_square.row == 1){
-                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray,2, 0);
-            }
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray,1, 0);
+        //white pawns move up and black down
+        if (this.player == Player.WHITE) {
+            directionMultiplier = 1
         }
         else{
-            if (current_square.row == GameSettings.BOARD_SIZE - 2){
-                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -2, 0);
+            directionMultiplier = -1
+        }
+
+        if (board.getPiece(Square.at(current_square.row + directionMultiplier, current_square.col)) == undefined) {
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 1*directionMultiplier, 0);
+            //can move 2 spaces if not already moved
+            if (!this.hasMoved){
+                if (board.getPiece(Square.at(current_square.row + 2*directionMultiplier, current_square.col)) == undefined) {
+                    this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 2*directionMultiplier, 0);
+                }
             }
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -1, 0);
         }
 
         return availableSpacesArray;
