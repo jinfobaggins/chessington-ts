@@ -8,6 +8,10 @@ export default class King extends Piece {
     }
 
     public getAvailableMoves(board: Board) {
-        return new Array(0);
+        let availableSpacesArray = new Array();
+        this.addLateralMoves(board, availableSpacesArray, 1);
+        this.addDiagonalMoves(board, availableSpacesArray, 1);
+
+        return availableSpacesArray;
     }
 }
