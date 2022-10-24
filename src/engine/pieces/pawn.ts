@@ -14,15 +14,15 @@ export default class Pawn extends Piece {
 
         if (this.player == 0){
             if (current_square.row == 1){
-                out_array.push(new Square(current_square.row + 2, current_square.col));
+                out_array.push(Square.at(current_square.row + 2, current_square.col));
             }
-            out_array.push(new Square(current_square.row + 1, current_square.col));
+            out_array.push(Square.at(current_square.row + 1, current_square.col));
         }
         else{
             if (current_square.row == 6){
-                out_array.push(new Square(current_square.row - 2, current_square.col));
+                out_array.push(Square.at(current_square.row - 2, current_square.col));
             }
-            out_array.push(new Square(current_square.row - 1, current_square.col));
+            out_array.push(Square.at(current_square.row - 1, current_square.col));
         }
 
 
