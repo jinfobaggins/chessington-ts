@@ -31,16 +31,39 @@ export default class Piece {
     }
 
 
-    public addLateralMoves(board: Board, availableSpacesArray: Square[], max_spaces: number){
+    public addLateralMoves(board: Board, availableSpacesArray: Square[], max_spaces: number) {
+        let currentSquare = board.findPiece(this);
+
         //horizontal
-        for (let i = 1; i<= max_spaces; i++){
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 0, i);
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 0, -i)
+        for (let i: number = 1; i <= max_spaces; i++) {
+            if (board.checkIfSquareEmpty(Square.at(currentSquare.row, currentSquare.col + i))) {
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 0, i);
+            } else {
+                break
+            }
         }
+        for (let i: number = 1; i <= max_spaces; i++) {
+            if (board.checkIfSquareEmpty(Square.at(currentSquare.row, currentSquare.col - i))) {
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 0, -i);
+            } else {
+                break
+            }
+        }
+
         //vertical
-        for (let i = 1; i<= max_spaces; i++) {
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, 0);
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, 0);
+        for (let i:number = 1; i <= max_spaces; i++) {
+            if (board.checkIfSquareEmpty(Square.at(currentSquare.row + i, currentSquare.col))) {
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, 0);
+            } else {
+                break
+            }
+        }
+        for (let i:number = 1; i <= max_spaces; i++) {
+            if (board.checkIfSquareEmpty(Square.at(currentSquare.row + i, currentSquare.col))) {
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, 0);
+            } else {
+                break
+            }
         }
     }
 

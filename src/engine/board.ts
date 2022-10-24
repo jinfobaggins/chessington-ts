@@ -20,6 +20,14 @@ export default class Board {
         return this.board[square.row][square.col];
     }
 
+    public checkIfSquareEmpty(square: Square){
+        if (square.row >= 0 && square.row <= GameSettings.BOARD_SIZE - 1 &&  square.col >= 0 && square.col <= GameSettings.BOARD_SIZE - 1 && this.getPiece(Square.at(square.row, square.col)) == undefined){
+            return true;
+        }
+
+
+    }
+
     public findPiece(pieceToFind: Piece) {
         for (let row = 0; row < this.board.length; row++) {
             for (let col = 0; col < this.board[row].length; col++) {
