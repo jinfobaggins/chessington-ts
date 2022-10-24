@@ -8,6 +8,16 @@ export default class Bishop extends Piece {
     }
 
     public getAvailableMoves(board: Board) {
-        return new Array(0);
+        let current_square = board.findPiece(this);
+        let out_array = new Array();
+
+        for(let i = 1; i <=7; i++){
+            this.addAvailableMoveByNumberOfSpaces(board, i, i, out_array)
+            this.addAvailableMoveByNumberOfSpaces(board, i, -i, out_array)
+            this.addAvailableMoveByNumberOfSpaces(board, -i, i, out_array)
+            this.addAvailableMoveByNumberOfSpaces(board, -i, -i, out_array)
+        }
+
+        return out_array;
     }
 }

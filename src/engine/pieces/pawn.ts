@@ -1,7 +1,6 @@
 import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
-import Square from '../square';
 
 export default class Pawn extends Piece {
     public constructor(player: Player) {
@@ -14,15 +13,15 @@ export default class Pawn extends Piece {
 
         if (this.player == 0){
             if (current_square.row == 1){
-                out_array.push(Square.at(current_square.row + 2, current_square.col));
+                this.addAvailableMoveByNumberOfSpaces(board, 2, 0, out_array)
             }
-            out_array.push(Square.at(current_square.row + 1, current_square.col));
+            this.addAvailableMoveByNumberOfSpaces(board, 1, 0, out_array)
         }
         else{
             if (current_square.row == 6){
-                out_array.push(Square.at(current_square.row - 2, current_square.col));
+                this.addAvailableMoveByNumberOfSpaces(board, -2, 0, out_array);
             }
-            out_array.push(Square.at(current_square.row - 1, current_square.col));
+            this.addAvailableMoveByNumberOfSpaces(board, -1, 0, out_array);
         }
 
 

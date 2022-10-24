@@ -14,13 +14,13 @@ export default class Rook extends Piece {
         //horizontal
         for (let i = 0; i<= 7; i++){
             if (i != current_square.col){
-                out_array.push(Square.at(current_square.row, i));
+                this.addAvailableMoveByGridReference(board, current_square.row, i, out_array);
             }
         }
         //vertical
         for (let i = 0; i<= 7; i++){
             if (i != current_square.row){
-                out_array.push(Square.at(i, current_square.col));
+                this.addAvailableMoveByGridReference(board, i, current_square.col, out_array);
             }
         }
         return out_array;
