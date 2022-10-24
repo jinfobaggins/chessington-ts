@@ -25,7 +25,7 @@ export default class Piece {
 
     public addAvailableMoveByNumberOfSpaces(board: Board, availableSpacesArray: Square[], nRows: number, nCols: number) {
         const currentSquare = board.findPiece(this);
-        if (currentSquare.row + nRows >= 0 && currentSquare.row + nRows <= GameSettings.BOARD_SIZE - 1 &&  currentSquare.col + nCols >= 0 && currentSquare.col + nCols <= GameSettings.BOARD_SIZE - 1){
+        if (board.checkSquareOnBoard(Square.at(currentSquare.row + nRows, currentSquare.col + nCols))){
             availableSpacesArray.push(Square.at(currentSquare.row + nRows, currentSquare.col + nCols))
         }
     }
@@ -37,6 +37,7 @@ export default class Piece {
     }
 
 
+    //try and tidy this up somehow so not 4 of exactly the same thing
     public addLateralMoves(board: Board, availableSpacesArray: Square[], max_spaces: number) {
         let currentSquare = board.findPiece(this);
 
@@ -44,7 +45,13 @@ export default class Piece {
         for (let i: number = 1; i <= max_spaces; i++) {
             if (board.checkIfSquareEmpty(Square.at(currentSquare.row, currentSquare.col + i))) {
                 this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 0, i);
-            } else {
+                //change this to a 'check if opposing piece in square' - add it to board
+            } else if (board.checkIfOpposingPieceOnSquare(Square.at(currentSquare.row, currentSquare.col + i), this.player)){
+                //take piece - write a function similar to moveTo but with taking a piece
+
+                break
+            }
+            else {
                 break
             }
         }

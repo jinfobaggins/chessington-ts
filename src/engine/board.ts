@@ -21,11 +21,24 @@ export default class Board {
     }
 
     public checkIfSquareEmpty(square: Square){
-        if (square.row >= 0 && square.row <= GameSettings.BOARD_SIZE - 1 &&  square.col >= 0 && square.col <= GameSettings.BOARD_SIZE - 1 && this.getPiece(Square.at(square.row, square.col)) == undefined){
+        if (this.checkSquareOnBoard(square) && this.getPiece(Square.at(square.row, square.col)) == undefined){
             return true;
         }
+    }
 
+    public checkIfOpposingPieceOnSquare(square:Square, player: Player){
+        if (this.checkSquareOnBoard(square)){
+            const pieceOnSquare = this.getPiece(square);
+            if(pieceOnSquare != undefined && pieceOnSquare.player != player){
+                return true;
+            }
+        }
+    }
 
+    public checkSquareOnBoard(square: Square){
+        if (square.row >= 0 && square.row <= GameSettings.BOARD_SIZE - 1 &&  square.col >= 0 && square.col <= GameSettings.BOARD_SIZE - 1) {
+            return true
+        }
     }
 
     public findPiece(pieceToFind: Piece) {
