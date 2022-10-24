@@ -1,6 +1,8 @@
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
+import GameSettings from '../gameSettings';
+
 
 export default class Piece {
     public player: Player;
@@ -18,17 +20,35 @@ export default class Piece {
         board.movePiece(currentSquare, newSquare);
     }
 
-    public addAvailableMoveByNumberOfSpaces(board: Board, nRows: number, nCols: number, availableSpacesArray: Square[]) {
+    public addAvailableMoveByNumberOfSpaces(board: Board, availableSpacesArray: Square[], nRows: number, nCols: number) {
         const currentSquare = board.findPiece(this);
-        if (currentSquare.row + nRows >= 0 && currentSquare.row + nRows <= 7 &&  currentSquare.col + nCols >= 0 && currentSquare.col + nCols <= 7){
+        if (currentSquare.row + nRows >= 0 && currentSquare.row + nRows <= GameSettings.BOARD_SIZE - 1 &&  currentSquare.col + nCols >= 0 && currentSquare.col + nCols <= GameSettings.BOARD_SIZE - 1){
             availableSpacesArray.push(Square.at(currentSquare.row + nRows, currentSquare.col + nCols))
         }
     }
 
-    public addAvailableMoveByGridReference(board: Board, row: number, col: number, availableSpacesArray: Square[]) {
-        const currentSquare = board.findPiece(this);
-        if (row >= 0 && row <= 7 &&  col >= 0 && col <= 7){
-            availableSpacesArray.push(Square.at(row, col))
+
+    public addLateralMoves(board: Board, availableSpacesArray: Square[], max_spaces: number){
+        //horizontal
+        for (let i = 1; i<= max_spaces; i++){
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 0, i);
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, 0, -i)
+        }
+        //vertical
+        for (let i = 1; i<= max_spaces; i++) {
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, 0);
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, 0);
         }
     }
+
+    public addDiagonalMoves(board: Board, availableSpacesArray: Square[], max_spaces: number){
+        for(let i = 1; i <=max_spaces; i++){
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, i)
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, -i)
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, i)
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, -i)
+        }
+    }
+
+
 }

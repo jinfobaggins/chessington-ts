@@ -1,6 +1,7 @@
 import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
+import GameSettings from '../gameSettings';
 
 export default class Pawn extends Piece {
     public constructor(player: Player) {
@@ -9,22 +10,21 @@ export default class Pawn extends Piece {
 
     public getAvailableMoves(board: Board) {
         let current_square = board.findPiece(this);
-        let out_array = new Array();
+        let availableSpacesArray = new Array();
 
         if (this.player == 0){
             if (current_square.row == 1){
-                this.addAvailableMoveByNumberOfSpaces(board, 2, 0, out_array)
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray,2, 0)
             }
-            this.addAvailableMoveByNumberOfSpaces(board, 1, 0, out_array)
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray,1, 0)
         }
         else{
-            if (current_square.row == 6){
-                this.addAvailableMoveByNumberOfSpaces(board, -2, 0, out_array);
+            if (current_square.row == GameSettings.BOARD_SIZE - 2){
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -2, 0);
             }
-            this.addAvailableMoveByNumberOfSpaces(board, -1, 0, out_array);
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -1, 0);
         }
 
-
-        return out_array;
+        return availableSpacesArray;
     }
 }

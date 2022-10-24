@@ -1,6 +1,7 @@
 import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
+import GameSettings from '../gameSettings';
 
 export default class Bishop extends Piece {
     public constructor(player: Player) {
@@ -8,16 +9,9 @@ export default class Bishop extends Piece {
     }
 
     public getAvailableMoves(board: Board) {
-        let current_square = board.findPiece(this);
-        let out_array = new Array();
+        let availableSpacesArray = new Array();
+        this.addDiagonalMoves(board, availableSpacesArray, GameSettings.BOARD_SIZE - 1)
 
-        for(let i = 1; i <=7; i++){
-            this.addAvailableMoveByNumberOfSpaces(board, i, i, out_array)
-            this.addAvailableMoveByNumberOfSpaces(board, i, -i, out_array)
-            this.addAvailableMoveByNumberOfSpaces(board, -i, i, out_array)
-            this.addAvailableMoveByNumberOfSpaces(board, -i, -i, out_array)
-        }
-
-        return out_array;
+        return availableSpacesArray;
     }
 }
