@@ -14,9 +14,9 @@ export default class Pawn extends Piece {
 
         if (this.player == 0){
             if (current_square.row == 1){
-                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray,2, 0)
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray,2, 0);
             }
-            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray,1, 0)
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray,1, 0);
         }
         else{
             if (current_square.row == GameSettings.BOARD_SIZE - 2){

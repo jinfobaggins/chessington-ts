@@ -10,7 +10,7 @@ export default class Rook extends Piece {
 
     public getAvailableMoves(board: Board) {
         let availableSpacesArray = new Array();
-        this.addLateralMoves(board, availableSpacesArray, GameSettings.BOARD_SIZE - 1)
+        this.addLateralMoves(board, availableSpacesArray, GameSettings.BOARD_SIZE - 1);
 
         return availableSpacesArray;
     }

@@ -10,7 +10,7 @@ export default class Bishop extends Piece {
 
     public getAvailableMoves(board: Board) {
         let availableSpacesArray = new Array();
-        this.addDiagonalMoves(board, availableSpacesArray, GameSettings.BOARD_SIZE - 1)
+        this.addDiagonalMoves(board, availableSpacesArray, GameSettings.BOARD_SIZE - 1);
 
         return availableSpacesArray;
     }
