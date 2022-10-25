@@ -2,6 +2,7 @@ import Player from './player';
 import GameSettings from './gameSettings';
 import Square from './square';
 import Piece from './pieces/piece';
+import King from './pieces/king';
 
 export default class Board {
     public currentPlayer: Player;
@@ -39,6 +40,13 @@ export default class Board {
         if (square.row >= 0 && square.row <= GameSettings.BOARD_SIZE - 1 &&  square.col >= 0 && square.col <= GameSettings.BOARD_SIZE - 1) {
             return true
         }
+    }
+
+    public checkIfKingOnSquare(square:Square){
+        if (this.getPiece(square) instanceof King) {
+            return true;
+        }
+        return false;
     }
 
     public findPiece(pieceToFind: Piece) {
