@@ -9,17 +9,26 @@ export default class Knight extends Piece {
     }
 
     public getAvailableMoves(board: Board) {
-        let currentSquare = board.findPiece(this);
         let availableSpacesArray = new Array();
-        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row + 1, currentSquare.col + 2))
-        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row + 1, currentSquare.col - 2))
-        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row - 1, currentSquare.col + 2))
-        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row - 1, currentSquare.col - 2))
-        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row + 2, currentSquare.col + 1))
-        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row + 2, currentSquare.col - 1))
-        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row - 2, currentSquare.col + 1))
-        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, Square.at(currentSquare.row - 2, currentSquare.col - 1))
+        this.addViableMove(board, availableSpacesArray, 1, 2)
+        this.addViableMove(board, availableSpacesArray, 1, -2)
+        this.addViableMove(board, availableSpacesArray, -1, 2)
+        this.addViableMove(board, availableSpacesArray, -1, -2)
+        this.addViableMove(board, availableSpacesArray, 2, 1)
+        this.addViableMove(board, availableSpacesArray, 2, -1)
+        this.addViableMove(board, availableSpacesArray, -2, 1)
+        this.addViableMove(board, availableSpacesArray, -2, -1)
 
         return availableSpacesArray;
     }
+
+    public addViableMove(board: Board, availableSpacesArray: Square[], numberOfRowsToMove: number, numberOfColumnsToMove: number) {
+        let currentSquare = board.findPiece(this);
+        let squareToMoveTo = Square.at(currentSquare.row + numberOfRowsToMove, currentSquare.col + numberOfColumnsToMove);
+        this.addAvailableMoveIfSquareEmpty(board, availableSpacesArray, squareToMoveTo);
+        if (board.checkIfOpposingPieceOnSquare(squareToMoveTo, this.player) && !board.checkIfKingOnSquare(squareToMoveTo)) {
+            this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, numberOfRowsToMove, numberOfColumnsToMove);
+        }
+    }
+
 }
