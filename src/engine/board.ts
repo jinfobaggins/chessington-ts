@@ -3,6 +3,7 @@ import GameSettings from './gameSettings';
 import Square from './square';
 import Piece from './pieces/piece';
 import King from './pieces/king';
+import Rook from './pieces/rook';
 
 export default class Board {
     public currentPlayer: Player;
@@ -44,6 +45,13 @@ export default class Board {
 
     public checkIfKingOnSquare(square:Square){
         if (this.getPiece(square) instanceof King) {
+            return true;
+        }
+        return false;
+    }
+
+    public checkIfRookOnStartingSquare(square:Square){
+        if (this.getPiece(square) instanceof Rook && !this.getPiece(square)?.hasMoved) {
             return true;
         }
         return false;

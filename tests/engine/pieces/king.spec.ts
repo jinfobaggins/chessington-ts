@@ -76,7 +76,7 @@ describe('King', () => {
         moves.should.not.deep.include(Square.at(5, 5));
     });
 
-    it('can caste with rook', () => {
+    it('can castle with rook', () => {
         const king = new King(Player.WHITE);
         const rook1 = new Rook(Player.WHITE);
         const rook2 = new Rook(Player.WHITE);
@@ -86,8 +86,8 @@ describe('King', () => {
         board.setPiece(Square.at(0, 7), rook2);
 
         const moves = king.getAvailableMoves(board);
-        const expectedMoves = [Square.at(0, 2), Square.at(0, 6)];
-        moves.should.have.deep.members(expectedMoves);
+        moves.should.deep.include(Square.at(0, 2));
+        moves.should.deep.include(Square.at(0, 6));
     });
 
     it( 'cannot castle if other pieces in way', () => {
@@ -108,9 +108,9 @@ describe('King', () => {
         const king = new King(Player.WHITE);
         const rook = new Rook(Player.WHITE);
 
-        board.setPiece(Square.at(1, 4), king);
+        board.setPiece(Square.at(0, 4), king);
         board.setPiece(Square.at(0, 0), rook);
-        king.moveTo(board, Square.at(0, 4))
+        king.moveTo(board, Square.at(1, 4))
 
         const moves = king.getAvailableMoves(board);
 
@@ -123,38 +123,13 @@ describe('King', () => {
         const rook = new Rook(Player.WHITE);
 
         board.setPiece(Square.at(0, 4), king);
-        board.setPiece(Square.at(2, 0), rook);
-        rook.moveTo(board, Square.at(0, 0))
-
-        const moves = king.getAvailableMoves(board);
-
-        moves.should.not.deep.include(Square.at(0, 2));
-    });
-
-    it('cannot castle if king not on starting square', () => {
-        const king = new King(Player.WHITE);
-        const rook = new Rook(Player.WHITE);
-
-        board.setPiece(Square.at(2, 4), king);
         board.setPiece(Square.at(0, 0), rook);
+        rook.moveTo(board, Square.at(2, 0))
 
         const moves = king.getAvailableMoves(board);
 
         moves.should.not.deep.include(Square.at(0, 2));
-        moves.should.not.deep.include(Square.at(2, 2));
     });
 
-    it('cannot castle if rook not on starting square', () => {
-        const king = new King(Player.WHITE);
-        const rook = new Rook(Player.WHITE);
-
-        board.setPiece(Square.at(0, 4), king);
-        board.setPiece(Square.at(2, 0), rook);
-
-        const moves = king.getAvailableMoves(board);
-
-        moves.should.not.deep.include(Square.at(0, 2));
-        moves.should.not.deep.include(Square.at(2, 2));
-    });
 
 });
