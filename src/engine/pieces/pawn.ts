@@ -31,14 +31,13 @@ export default class Pawn extends Piece {
             }
         }
 
-        //check if diagonally forward has opposing colour piece. If yes, add it as availability (unless king)
+        //can take diagonally forwards (to the left or right)
         for (let i of [-1, 1]) {
             let squareToMoveTo = Square.at(currentSquare.row + directionMultiplier, currentSquare.col + i)
             if (board.checkIfOpposingPieceOnSquare(squareToMoveTo, this.player) && !board.checkIfKingOnSquare(squareToMoveTo)) {
                 this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, directionMultiplier, i);
             }
         }
-
 
         return availableSpacesArray;
     }
