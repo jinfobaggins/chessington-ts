@@ -88,4 +88,18 @@ describe('Rook', () => {
 
         moves.should.not.deep.include(Square.at(4, 6));
     });
+
+    it('when king is castled rook moves', () =>{
+        const king = new King(Player.WHITE);
+        const rook = new Rook(Player.WHITE);
+
+        board.setPiece(Square.at(0, 4), king);
+        board.setPiece(Square.at(0, 0), rook);
+
+        king.moveTo(board, Square.at(0, 2));
+        const rookPosition = board.findPiece(rook);
+
+        rookPosition.should.equal(Square.at(0, 3));
+
+    });
 });
