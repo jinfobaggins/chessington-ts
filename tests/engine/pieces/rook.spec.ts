@@ -97,9 +97,9 @@ describe('Rook', () => {
         board.setPiece(Square.at(0, 0), rook);
 
         king.moveTo(board, Square.at(0, 2));
-        const rookPosition = board.findPiece(rook);
-
-        rookPosition.should.equal(Square.at(0, 3));
+        const pieceOnRookSquare = board.getPiece(Square.at(0, 3));
+        (pieceOnRookSquare instanceof Rook).should.true
 
     });
+
 });

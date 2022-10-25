@@ -1,6 +1,7 @@
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
+import GameSettings from "../gameSettings";
 
 
 export default class Piece {
@@ -10,6 +11,7 @@ export default class Piece {
     public constructor(player: Player) {
         this.player = player;
         this.hasMoved = false;
+
     }
 
     public getAvailableMoves(board: Board) {
@@ -18,7 +20,24 @@ export default class Piece {
 
     public moveTo(board: Board, newSquare: Square) {
         const currentSquare = board.findPiece(this);
-        board.movePiece(currentSquare, newSquare);
+
+        if (board.checkIfKingOnSquare(currentSquare) && Math.abs(newSquare.col-currentSquare.col) == 2){
+            board.movePiece(currentSquare, newSquare, true);
+            //queenside
+            if (currentSquare.col > newSquare.col){
+                const rook = board.getPiece(Square.at(currentSquare.row, 0));
+                rook?.moveTo(board, Square.at(currentSquare.row, newSquare.col + 1))
+
+            //kingside
+            } else if (currentSquare.col > newSquare.col){
+                const rook = board.getPiece(Square.at(currentSquare.row, 0));
+                rook?.moveTo(board, Square.at(currentSquare.row, newSquare.col + 1))
+            }
+
+        } else {
+            board.movePiece(currentSquare, newSquare, false);
+        }
+
         this.hasMoved = true;
     }
 

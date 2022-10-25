@@ -132,7 +132,7 @@ class Board {
         throw new Error('The supplied piece is not on the board');
     }
 
-    movePiece(fromSquare, toSquare) {
+    movePiece(fromSquare, toSquare, castling) {
         const movingPiece = this.getPiece(fromSquare);
         const capturedPiece = this.getPiece(toSquare);
         
@@ -143,7 +143,9 @@ class Board {
 
             this.setPiece(toSquare, movingPiece);
             this.setPiece(fromSquare, undefined);
-            this.currentPlayer = this.currentPlayer === __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */].WHITE ? __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */].BLACK : __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */].WHITE;
+            if (!castling) {
+                this.currentPlayer = this.currentPlayer === __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */].WHITE ? __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */].BLACK : __WEBPACK_IMPORTED_MODULE_0__player__["a" /* default */].WHITE;
+            }
         }
     }
 }

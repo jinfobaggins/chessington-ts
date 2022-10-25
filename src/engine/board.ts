@@ -68,12 +68,15 @@ export default class Board {
         throw new Error('The supplied piece is not on the board');
     }
 
-    public movePiece(fromSquare: Square, toSquare: Square) {
+    public movePiece(fromSquare: Square, toSquare: Square, castling: boolean) {
         const movingPiece = this.getPiece(fromSquare);        
         if (!!movingPiece && movingPiece.player === this.currentPlayer) {
             this.setPiece(toSquare, movingPiece);
             this.setPiece(fromSquare, undefined);
-            this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);
+            //change player UNLESS castling
+            if (!castling) {
+                this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);
+            }
         }
     }
 
