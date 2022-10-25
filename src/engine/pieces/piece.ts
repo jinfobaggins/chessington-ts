@@ -1,7 +1,6 @@
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
-import King from '../pieces/king';
 
 
 export default class Piece {
@@ -36,71 +35,44 @@ export default class Piece {
         }
     }
 
+    public addMovesIteratively(board: Board, availableSpacesArray: Square[], max_spaces: number, rowIterator: number, columnIterator: number){
+        let currentSquare = board.findPiece(this);
+
+        for (let i: number = 1; i <= max_spaces; i++) {
+            let squareToMoveTo = Square.at(currentSquare.row + i * rowIterator, currentSquare.col + i * columnIterator);
+
+            if (board.checkIfSquareEmpty(squareToMoveTo)) {
+                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i * rowIterator, i * columnIterator);
+            } else if (board.checkIfOpposingPieceOnSquare(squareToMoveTo, this.player)) {
+                //can't take the king
+                if (!board.checkIfKingOnSquare(squareToMoveTo)) {
+                    this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i * rowIterator, i * columnIterator);
+                    break;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+    }
+
 
     //try and tidy this up somehow so not 4 of exactly the same thing
     public addLateralMoves(board: Board, availableSpacesArray: Square[], max_spaces: number) {
-        let currentSquare = board.findPiece(this);
-        let columnIterator = [1, -1, 0, 0] //left, right, up, down
-        let rowIterator = [0, 0, 1, -1] //left, right, up, down
-
+        let columnIteratorArray = [1, -1, 0, 0]
+        let rowIteratorArray = [0, 0, 1, -1]
         for (let j = 0; j < 4; j++) {
-
-            //horizontal
-            for (let i: number = 1; i <= max_spaces; i++) {
-                let squareToMoveTo = Square.at(currentSquare.row + i * rowIterator[j], currentSquare.col + i * columnIterator[j])
-
-                if (board.checkIfSquareEmpty(squareToMoveTo)) {
-                    this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i * rowIterator[j], i * columnIterator[j]);
-                } else if (board.checkIfOpposingPieceOnSquare(squareToMoveTo, this.player)) {
-                    //can't take the king
-                    if (!board.checkIfKingOnSquare(squareToMoveTo)) {
-                        this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i * rowIterator[j], i * columnIterator[j])
-                        break
-                    } else {
-                        break
-                    }
-                } else {
-                    break
-                }
-            }
+            this.addMovesIteratively(board, availableSpacesArray, max_spaces, rowIteratorArray[j], columnIteratorArray[j])
         }
     }
 
     public addDiagonalMoves(board: Board, availableSpacesArray: Square[], max_spaces: number){
-        let currentSquare = board.findPiece(this);
-        for(let i = 1; i <=max_spaces; i++) {
-            if (board.checkIfSquareEmpty(Square.at(currentSquare.row + i, currentSquare.col + i))) {
-                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, i)
-            } else {
-                break
-            }
+        let columnIteratorArray = [1, -1, 1, -1]
+        let rowIteratorArray = [1, 1, -1, -1]
+        for (let j = 0; j < 4; j++) {
+            this.addMovesIteratively(board, availableSpacesArray, max_spaces, rowIteratorArray[j], columnIteratorArray[j])
         }
-
-        for(let i = 1; i <=max_spaces; i++) {
-            if (board.checkIfSquareEmpty(Square.at(currentSquare.row + i, currentSquare.col - i))) {
-                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, i, -i)
-            } else {
-                break
-            }
-        }
-
-        for(let i = 1; i <=max_spaces; i++) {
-            if (board.checkIfSquareEmpty(Square.at(currentSquare.row - i, currentSquare.col + i))) {
-                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, i)
-            } else {
-                break
-            }
-        }
-
-        for(let i = 1; i <=max_spaces; i++) {
-            if (board.checkIfSquareEmpty(Square.at(currentSquare.row - i, currentSquare.col - i))) {
-                this.addAvailableMoveByNumberOfSpaces(board, availableSpacesArray, -i, -i)
-            } else {
-                break
-            }
-        }
-
     }
-
 
 }
